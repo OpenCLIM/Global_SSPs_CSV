@@ -4,6 +4,55 @@ from glob import glob
 import pandas as pd
 import geopandas as gpd
 
+### This code creates a metadata.json file which tells DAFNI what to name each output ###
+def metadata_json(output_path, output_title, output_description, bbox, file_name):
+    """
+    Generate a metadata json file used to catalogue the outputs of the UDM model on DAFNI
+    """
+
+    # Create metadata file
+    metadata = f"""{{
+      "@context": ["metadata-v1"],
+      "@type": "dcat:Dataset",
+      "dct:language": "en",
+      "dct:title": "{output_title}",
+      "dct:description": "{output_description}",
+      "dcat:keyword": [
+        "UDM"
+      ],
+      "dct:subject": "Environment",
+      "dct:license": {{
+        "@type": "LicenseDocument",
+        "@id": "https://creativecommons.org/licences/by/4.0/",
+        "rdfs:label": null
+      }},
+      "dct:creator": [{{"@type": "foaf:Organization"}}],
+      "dcat:contactPoint": {{
+        "@type": "vcard:Organization",
+        "vcard:fn": "DAFNI",
+        "vcard:hasEmail": "support@dafni.ac.uk"
+      }},
+      "dct:created": "{datetime.now().isoformat()}Z",
+      "dct:PeriodOfTime": {{
+        "type": "dct:PeriodOfTime",
+        "time:hasBeginning": null,
+        "time:hasEnd": null
+      }},
+      "dafni_version_note": "created",
+      "dct:spatial": {{
+        "@type": "dct:Location",
+        "rdfs:label": null
+      }},
+      "geojson": {bbox}
+    }}
+    """
+
+    # write to file
+    with open(join(output_path, '%s.json' % file_name), 'w') as f:
+        f.write(metadata)
+    return
+
+
 # Set data paths
 data_path = os.getenv('DATA','/data')
 
@@ -24,6 +73,11 @@ if len(parameter_file) == 1 :
     lad_name = parameters.loc[3][1]
     lad_code = parameters.loc[4][1]
     country = parameters.loc[0][1]
+
+if len(parameter_file) == 0:
+    country = os.getenv('COUNTRY')
+    lad_name = os.getenv('LAD_NAME')
+    lad_code = os.getenv('LAD_CODE')
 
 results_name = glob(inputs_path + "/*.gpkg", recursive = True)
 results = gpd.read_file(results_name[1])
@@ -67,3 +121,9 @@ final['ID'] = final.reset_index().index
 
 final.to_csv(
     os.path.join(outputs_path, country+'_Demography.csv'), index=False,  float_format='%g') 
+
+title_for_output = country + ' - ' + SSP +' csv.'
+
+description_for_data_prep = 'This dataset contains a single csv file detailing population change for ' + country + ' under the each ssp scenario. Generated using the downscaled SSP datasets (https://www.nature.com/articles/s41597-021-01052-0) data is collated at the Local Authority level selected by the user.'
+# write a metadata file so outputs properly recorded on DAFNI
+metadata_json(output_path=meta_outputs_path, output_title=title_for_output, output_description=description_for_data_prep, bbox=geojson, file_name='metadata_ssp_data_csv')
