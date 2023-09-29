@@ -3,6 +3,7 @@ import glob
 from glob import glob
 import pandas as pd
 import geopandas as gpd
+from geojson import Polygon
 
 ### This code creates a metadata.json file which tells DAFNI what to name each output ###
 def metadata_json(output_path, output_title, output_description, bbox, file_name):
