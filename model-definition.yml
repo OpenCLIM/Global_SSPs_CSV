@@ -1,0 +1,64 @@
+kind: M
+api_version: v1beta2
+metadata:
+  display_name: Global_SSPS:CSV
+  name: data-ssp-csv
+  publisher: Newcastle University
+  summary: >
+    The model should suceed the Global_SSPS: Inputs and Global_SSPS: Clip & Aggregate models after they have been run for all five ssp scenarios.
+    The Urban Development Model (UDM) pulls changes in population and creates new land use maps with developed areas to capture changes in population density.
+    UDM pulls data from a csv file showing the demography changes.
+    This model creates that file for the selected country.
+  source_code: https://github.com/OpenCLIM/impact-assessment
+  description: >
+    Data is transformed from a .gpkg file to a csv file needed by the UDM model. 
+
+
+spec:
+  inputs:
+    parameters:
+      - name: COUNTRY
+        title: country
+        type: string
+        description: The country of interest. Only needed if not preceeded by the other Global SSP models.
+        required: false
+
+      - name: LAD_NAME
+        title: Column Header for the LAD name
+        type: string
+        description:
+          Future models need to know the name of the column from the dataset of Local Authority polygons which contains the name of each LAD. Only needed if not preceeded by the other Global SSP models.
+        required: false
+
+      - name: LAD_CODE
+        title: Column Header for the LAD code
+        description:
+          Future models need to know the name of the column from the dataset of Local Authority polygons which contains the code of each LAD. Only needed if not preceeded by the other Global SSP models.
+        type: string
+        required: false
+
+    dataslots:
+      - name: Lad Data
+        description:
+          A .gpkg file with the projected population changes per LAD. Only needed if not preceeded by the other Global SSP models.
+        path: inputs/
+        required: false
+
+      - name: Parameters
+        description:
+          A .csv file detailing the selected parameters - taken from the preceeding Global_SSPS:Inputs model.
+        path: inputs/parameters/
+        required: false
+
+  outputs:
+    datasets:
+      - name: outputs/*
+        type: folder
+        description:
+          Contains a single .csv file with the population changes per LAD in csv format.
+        
+      - name: outputs/parameters/*
+        type: folder
+        description:
+          All parameters and their values are stored in a csv file.
+
