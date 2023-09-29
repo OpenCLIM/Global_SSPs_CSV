@@ -131,4 +131,4 @@ title_for_output = country + 'SSP data by Local Authority .csv.'
 
 description_for_data_prep = 'This dataset contains a single csv file detailing population change for ' + country + ' under the each ssp scenario. Generated using the downscaled SSP datasets (https://www.nature.com/articles/s41597-021-01052-0) data is collated at the Local Authority level selected by the user.'
 # write a metadata file so outputs properly recorded on DAFNI
-metadata_json(output_path=meta_outputs_path, output_title=title_for_output, output_description=description_for_data_prep, bbox=geojson, file_name='metadata_ssp_data_csv')
+metadata_json(output_path=meta_outputs_path, output_title=title_for_output, output_description=description_for_data_prep, file_name='metadata_ssp_data_csv')
