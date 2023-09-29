@@ -28,5 +28,5 @@ jobs:
           image-path: ./global_ssps_csv.tar.gz
           username: ${{ secrets.DAFNI_SERVICE_ACCOUNT_USERNAME }}
           password: ${{ secrets.DAFNI_SERVICE_ACCOUNT_PASSWORD }}
-          version-message: ${{ env.TAG }}
+          version-message: "Uploaded from GitHub workflow"
           parent-model: "7f8c30e8-726f-4115-88cc-5ebd07fefb00"
