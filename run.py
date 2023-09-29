@@ -65,6 +65,10 @@ outputs_path = os.path.join(data_path, 'outputs')
 if not os.path.exists(outputs_path):
     os.mkdir(outputs_path)
 
+meta_outputs_path = os.path.join(outputs_path, 'metadata')
+if not os.path.exists(meta_outputs_path):
+    os.mkdir(meta_outputs_path)
+
 # Look to see if a parameter file has been added
 parameter_file = glob(parameters_path + "/*.csv", recursive = True)
 
