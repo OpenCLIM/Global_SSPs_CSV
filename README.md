@@ -1,5 +1,5 @@
 # Global_SSPs_CSV
-The model should suceed the Global_SSPS: Inputs and Global_SSPS: Clip & Aggregate models after they have been run for all five ssp scenarios.The Urban Development Model (UDM) pulls changes in population and creates new land use maps with developed areas to capture changes in population density. UDM pulls data from a csv file showing the demography changes. This model creates that file for the selected country.
+The model should suceed the Global_SSPS: Inputs and Global_SSPS: Clip & Aggregate models after they have been run for all five ssp scenarios. The Urban Development Model (UDM) pulls changes in population and creates new land use maps with developed areas to capture changes in population density. UDM pulls data from a csv file showing the demography changes. This model creates that file for the selected country.
 
 ## Description
 Data is transformed from a .gpkg file to a csv file needed by the UDM model. 
