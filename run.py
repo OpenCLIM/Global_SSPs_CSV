@@ -74,19 +74,27 @@ if not os.path.exists(meta_outputs_path):
 
 # Look to see if a parameter file has been added
 parameter_file = glob(parameters_path + "/*.csv", recursive = True)
+print('parameter_file:', parameter_file)
 
-if len(parameter_file) == 1 :
+if len(parameter_file) != 0 :
     parameters = pd.read_csv(parameter_file[0])
     lad_name = parameters.loc[3][1]
+    print('lad_name:', lad_name)
     lad_code = parameters.loc[4][1]
+    print('lad_code:', lad_code)
     country = parameters.loc[0][1]
+    print('country:', country)
 
 if len(parameter_file) == 0:
     country = os.getenv('COUNTRY')
+    print('country:', country)
     lad_name = os.getenv('LAD_NAME')
+    print('lad_name:', lad_name)
     lad_code = os.getenv('LAD_CODE')
+    print('lad_code:', lad_code)
 
 results_name = glob(inputs_path + "/*.gpkg", recursive = True)
+print('results_name:',results_name)
 results = gpd.read_file(results_name[1])
 
 csv_file = []
