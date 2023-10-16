@@ -151,7 +151,7 @@ description_for_data_prep = 'This dataset contains a single csv file detailing p
 metadata_json(output_path=meta_outputs_path, output_title=title_for_output, output_description=description_for_data_prep, bbox={} , file_name='metadata_ssp_data_csv')
 
 # Move the parameter file into the outputs/parameters folder
-if len(parameter_file) == 1 :
+if len(parameter_file) != 0 :
     file_path = os.path.splitext(parameter_file[0])
     filename=file_path[0].split("/")
 
