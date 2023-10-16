@@ -72,6 +72,12 @@ meta_outputs_path = os.path.join(outputs_path, 'metadata')
 if not os.path.exists(meta_outputs_path):
     os.mkdir(meta_outputs_path)
 
+
+# Define output path for parameters
+parameters_out_path=os.path.join(outputs_path,'parameters')
+if not os.path.exists(parameters_out_path):
+    os.mkdir(parameters_out_path)
+
 # Look to see if a parameter file has been added
 parameter_file = glob(parameters_path + "/*.csv", recursive = True)
 print('parameter_file:', parameter_file)
@@ -142,3 +148,12 @@ title_for_output = country + 'SSP data by Local Authority .csv.'
 description_for_data_prep = 'This dataset contains a single csv file detailing population change for ' + country + ' under the each ssp scenario. Generated using the downscaled SSP datasets (https://www.nature.com/articles/s41597-021-01052-0) data is collated at the Local Authority level selected by the user.'
 # write a metadata file so outputs properly recorded on DAFNI
 metadata_json(output_path=meta_outputs_path, output_title=title_for_output, output_description=description_for_data_prep, bbox={} , file_name='metadata_ssp_data_csv')
+
+# Move the parameter file into the outputs/parameters folder
+if len(parameter_file) == 1 :
+    file_path = os.path.splitext(parameter_file[0])
+    filename=file_path[0].split("/")
+
+    src = parameter_file[0]
+    dst = os.path.join(parameters_out_path,filename[-1] + '.csv')
+    shutil.copy(src,dst)
